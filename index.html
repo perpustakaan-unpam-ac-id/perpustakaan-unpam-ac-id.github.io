@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PERPUSTAKAAN UNIVERSITAS PAMULANG – Berbagi Untuk Negeri</title>
+  <link rel="icon" type="image/png" href="https://perpustakaan-unpam-ac-id.github.io/logo-unpam.png">
+  <meta name="google-site-verification" content="SrTZawFSaLAONuV52vjH13dAEw3zOeO0J7W9G7wwpi8" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Open Sans', sans-serif; font-size: 14px; color: #333; background: #f5f5f5; }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: #1a1a2e;
+      color: #ccc;
+      font-size: 12px;
+      padding: 5px 0;
+    }
+    .top-bar .container { display: flex; justify-content: space-between; align-items: center; }
+    .top-bar a { color: #ccc; text-decoration: none; margin-left: 10px; font-size: 12px; }
+    .top-bar a:hover { color: #fff; }
+    .top-bar .left-links a { margin-left: 0; margin-right: 12px; }
+
+    /* ===== HEADER ===== */
+    header {
+      background: #fff;
+      border-bottom: 3px solid #c8102e;
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: padding 0.3s ease, box-shadow 0.3s ease;
+    }
+    header.scrolled {
+      padding: 6px 0;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.18);
+    }
+    header .container { display: flex; align-items: center; justify-content: space-between; }
+    .header-logo { display: flex; align-items: center; gap: 14px; }
+    .header-logo img.logo {
+      height: 70px;
+      width: auto;
+      transition: height 0.3s ease;
+    }
+    header.scrolled .header-logo img.logo { height: 46px; }
+    .header-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #c8102e;
+      text-transform: uppercase;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+      transition: font-size 0.3s ease;
+    }
+    header.scrolled .header-text h1 { font-size: 14px; }
+    .header-text p {
+      font-size: 12px;
+      color: #555;
+      font-style: italic;
+      margin-top: 2px;
+      transition: opacity 0.3s ease;
+    }
+    header.scrolled .header-text p { opacity: 0; height: 0; margin: 0; overflow: hidden; }
+    .header-right { display: flex; gap: 8px; align-items: center; }
+    .header-right a {
+      background: #c8102e;
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .header-right a:hover { background: #a00d24; }
+    .header-right a.outline {
+      background: #fff;
+      color: #c8102e;
+      border: 2px solid #c8102e;
+    }
+    .header-right a.outline:hover { background: #c8102e; color: #fff; }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      background: #c8102e;
+      position: sticky;
+      top: 97px; /* matches header height */
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      transition: top 0.3s ease;
+    }
+    nav.nav-compact { top: 61px; }
+    nav .container { display: flex; align-items: center; }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; }
+    nav ul li { position: relative; }
+    nav ul li a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      padding: 13px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      transition: background 0.2s;
+    }
+    nav ul li a:hover, nav ul li a.active { background: rgba(0,0,0,0.2); }
+    nav ul li:hover > ul { display: block; }
+    nav ul ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #a00d24;
+      min-width: 200px;
+      z-index: 200;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+    }
+    nav ul ul li a {
+      padding: 10px 16px;
+      font-size: 12px;
+      text-transform: none;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-toggle { display: none; color: #fff; font-size: 22px; cursor: pointer; padding: 10px 16px; }
+
+    /* ===== HERO SLIDER ===== */
+    .slider {
+      position: relative;
+      overflow: hidden;
+      height: 420px;
+      background: #1a1a2e;
+    }
+    .slide {
+      display: none;
+      position: absolute;
+      inset: 0;
+    }
+    .slide.active { display: block; }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7);
+    }
+    .slide-caption {
+      position: absolute;
+      bottom: 60px;
+      left: 60px;
+      right: 60px;
+      color: #fff;
+    }
+    .slide-caption h2 {
+      font-size: 28px;
+      font-weight: 700;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+      margin-bottom: 8px;
+    }
+    .slide-caption p {
+      font-size: 15px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+    .slider-controls {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+    .slider-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      border: 2px solid #fff;
+      transition: background 0.2s;
+    }
+    .slider-dot.active { background: #c8102e; }
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(200,16,46,0.7);
+      color: #fff;
+      border: none;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .slider-arrow:hover { background: #c8102e; }
+    .slider-arrow.prev { left: 15px; }
+    .slider-arrow.next { right: 15px; }
+
+    /* ===== MARQUEE ===== */
+    .marquee-bar {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 8px 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .marquee-label {
+      background: #c8102e;
+      color: #fff;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      text-transform: uppercase;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .marquee-text { animation: marquee 30s linear infinite; white-space: nowrap; font-size: 13px; }
+    @keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+    /* ===== MAIN LAYOUT ===== */
+    .main-wrap { padding: 24px 0; }
+    .main-wrap .container { display: flex; gap: 24px; }
+    .content-area { flex: 1; min-width: 0; }
+    .sidebar { width: 280px; flex-shrink: 0; }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      background: #c8102e;
+      padding: 9px 14px;
+      text-transform: uppercase;
+      border-left: 4px solid #900010;
+      margin-bottom: 0;
+      letter-spacing: 0.5px;
+    }
+    .section-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-top: none;
+      margin-bottom: 22px;
+    }
+
+    /* ===== BERITA ===== */
+    .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .news-item {
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.15s;
+    }
+    .news-item:hover { background: #fef4f6; }
+    .news-item:nth-child(even) { border-right: none; }
+    .news-img { width: 80px; height: 65px; object-fit: cover; flex-shrink: 0; border-radius: 2px; }
+    .news-body h4 { font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; color: #222; }
+    .news-body .news-meta { font-size: 11px; color: #999; }
+    .news-body .news-meta i { color: #c8102e; margin-right: 3px; }
+
+    /* ===== QUICK ACCESS ===== */
+    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .quick-item {
+      text-align: center;
+      padding: 20px 10px;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      text-decoration: none;
+      color: #333;
+      transition: background 0.15s;
+    }
+    .quick-item:hover { background: #fef4f6; }
+    .quick-item:nth-child(4n) { border-right: none; }
+    .quick-item .qi-icon {
+      width: 52px; height: 52px;
+      background: #c8102e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      color: #fff;
+      font-size: 20px;
+    }
+    .quick-item p { font-size: 12px; font-weight: 600; line-height: 1.3; color: #444; }
+
+    /* ===== STATS ===== */
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .stat-item {
+      text-align: center;
+      padding: 20px 10px;
+      border-right: 1px solid #eee;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 28px; font-weight: 700; color: #c8102e; }
+    .stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+
+    /* ===== SIDEBAR WIDGETS ===== */
+    .widget { margin-bottom: 22px; }
+    .widget-body { background: #fff; border: 1px solid #ddd; border-top: none; padding: 14px; }
+
+    /* Search Widget */
+    .search-form { display: flex; }
+    .search-form input {
+      flex: 1;
+      border: 1px solid #ddd;
+      border-right: none;
+      padding: 8px 10px;
+      font-size: 13px;
+      border-radius: 2px 0 0 2px;
+      outline: none;
+    }
+    .search-form button {
+      background: #c8102e;
+      border: none;
+      color: #fff;
+      padding: 0 14px;
+      cursor: pointer;
+      border-radius: 0 2px 2px 0;
+      font-size: 14px;
+    }
+
+    /* Links Widget */
+    .link-list { list-style: none; }
+    .link-list li { border-bottom: 1px solid #f0f0f0; }
+    .link-list li:last-child { border-bottom: none; }
+    .link-list li a {
+      display: block;
+      padding: 8px 0;
+      text-decoration: none;
+      color: #333;
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+    .link-list li a:hover { color: #c8102e; padding-left: 6px; }
+    .link-list li a i { color: #c8102e; margin-right: 6px; font-size: 11px; }
+
+    /* Jam Layanan */
+    .jam-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+    .jam-table td { padding: 5px 4px; border-bottom: 1px solid #f0f0f0; }
+    .jam-table td:first-child { color: #555; font-weight: 600; }
+    .jam-table td:last-child { color: #c8102e; font-weight: 600; text-align: right; }
+
+    /* Social Media */
+    .social-links { display: flex; flex-direction: column; gap: 8px; }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 3px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .social-btn:hover { opacity: 0.85; }
+    .social-btn.fb { background: #1877f2; }
+    .social-btn.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .social-btn.yt { background: #ff0000; }
+    .social-btn.tt { background: #010101; }
+    .social-btn i { font-size: 17px; }
+
+    /* Gallery thumb */
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 12px; }
+    .gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; cursor: pointer; transition: opacity 0.2s; }
+    .gallery-grid img:hover { opacity: 0.8; }
+
+    /* ===== CONTACT BANNER ===== */
+    .contact-banner {
+      background: linear-gradient(135deg, #c8102e 0%, #900010 100%);
+      color: #fff;
+      padding: 30px 0;
+      margin: 10px 0 0;
+    }
+    .contact-banner .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .contact-info { display: flex; gap: 30px; flex-wrap: wrap; }
+    .contact-item { display: flex; align-items: flex-start; gap: 12px; }
+    .contact-item i { font-size: 22px; margin-top: 2px; opacity: 0.9; }
+    .contact-item h4 { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.5px; }
+    .contact-item p { font-size: 14px; font-weight: 600; }
+
+    /* ===== FOOTER ===== */
+    footer { background: #1a1a2e; color: #aaa; padding: 35px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #c8102e;
+      letter-spacing: 0.5px;
+    }
+    .footer-col p { font-size: 13px; line-height: 1.7; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 7px; }
+    .footer-col ul li a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+    .footer-col ul li a:hover { color: #c8102e; }
+    .footer-col ul li a i { margin-right: 6px; color: #c8102e; font-size: 11px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .footer-logo img { height: 55px; }
+    .footer-logo .ft-text { color: #fff; font-weight: 700; font-size: 14px; line-height: 1.3; }
+    .footer-bottom {
+      background: #0f0f1a;
+      text-align: center;
+      padding: 14px;
+      font-size: 12px;
+      color: #666;
+      border-top: 1px solid #2a2a40;
+    }
+    .footer-bottom a { color: #c8102e; text-decoration: none; }
+
+    /* ===== CONTAINER ===== */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 15px; }
+
+    /* ===== PMB BANNER ===== */
+    .pmb-banner {
+      background: #c8102e;
+      text-align: center;
+      padding: 10px;
+    }
+    .pmb-banner a {
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .pmb-banner a:hover { text-decoration: underline; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .main-wrap .container { flex-direction: column; }
+      .sidebar { width: 100%; }
+      .news-grid { grid-template-columns: 1fr; }
+      .news-item { border-right: none; }
+      .quick-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .slider { height: 280px; }
+    }
+    @media (max-width: 600px) {
+      .header-logo img.logo { height: 50px; }
+      .header-text h1 { font-size: 14px; }
+      .header-right { display: none; }
+      nav ul { display: none; flex-direction: column; width: 100%; }
+      nav ul.open { display: flex; }
+      nav ul li a { padding: 10px 16px; font-size: 13px; }
+      .nav-toggle { display: block; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .slide-caption { left: 20px; right: 20px; bottom: 40px; }
+      .slide-caption h2 { font-size: 18px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .contact-info { flex-direction: column; gap: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="left-links">
+      <a href="#"><i class="fas fa-home"></i> e-Learning Unpam</a>
+      <a href="#">Universitas Pamulang</a>
+      <a href="#">My Eresha</a>
+      <a href="#">e-Learning Eresha</a>
+      <a href="#">Klinik WDH</a>
+    </div>
+    <div>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- PMB BANNER -->
+<div class="pmb-banner">
+  <a href="#">PENDAFTARAN MAHASISWA BARU &nbsp;|&nbsp; Klik Di Sini</a>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-logo">
+<img class="logo" 
+     src="https://perpustakaan-unpam-ac-id.github.io/logo-unpam.png"
+     alt="Logo Universitas Pamulang"/>
+      <div class="header-text">
+        <h1>Perpustakaan Universitas Pamulang</h1>
+        <p>Berbagi Untuk Negeri</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <a href="https://perpus.unpam.ac.id" target="_blank"><i class="fas fa-search"></i> Pencarian Buku</a>
+      <a href="#" class="outline"><i class="fas fa-user"></i> My Unpam</a>
+    </div>
+  </div>
+</header>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="container">
+    <span class="nav-toggle" onclick="toggleNav()"><i class="fas fa-bars"></i></span>
+    <ul id="main-nav">
+      <li><a href="#" class="active">Beranda</a></li>
+      <li>
+        <a href="#">Tentang Kami <i class="fas fa-chevron-down" style="font-size:10px"></i></a>
+        <ul>
+          <li><a href="#">Sambutan Rektor</a></li>
+          <li><a href="#">Sambutan Kepala Pustaka</a></li>
+          <li><a href="#">Visi dan Misi</a></li>
+          <li><a href="#">Tujuan</a></li>
+          <li><a href="#">Motto</a></li>
+          <li><a href="#">Profil Perpustakaan</a></li>
+          <li><a href="#">Statistik</a></li>
+          <li><a href="#">Sasaran Mutu</a></li>
+          <li><a href="#">Sejarah</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Layanan <i class="fas fa-chevron-down" style="font-size:10px"></i></a>
+        <ul>
+          <li><a href="#">Syarat Keanggotaan</a></li>
+          <li><a href="#">Peminjaman & Pengembalian</a></li>
+          <li><a href="#">Bebas Pustaka</a></li>
+          <li><a href="#">Ruang Baca</a></li>
+          <li><a href="#">Internet & Wifi</a></li>
+          <li><a href="#">Fotokopi</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Koleksi <i class="fas fa-chevron-down" style="font-size:10px"></i></a>
+        <ul>
+          <li><a href="#">Koleksi Buku</a></li>
+          <li><a href="#">Jurnal</a></li>
+          <li><a href="#">Skripsi & Tesis</a></li>
+          <li><a href="#">Laporan Akhir</a></li>
+          <li><a href="#">E-Book</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Perpustakaan Digital</a></li>
+      <li><a href="#">Database Online</a></li>
+      <li><a href="#">Kegiatan</a></li>
+      <li>
+        <a href="#">Unduh <i class="fas fa-chevron-down" style="font-size:10px"></i></a>
+        <ul>
+          <li><a href="#">Formulir Bebas Pustaka</a></li>
+          <li><a href="#">Formulir Keanggotaan</a></li>
+          <li><a href="#">Panduan Penggunaan</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Kontak</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<div class="slider">
+  <div class="slide active">
+    <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/slider1.jpg"
+      onerror="this.src='https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1200&q=80'"
+      alt="Perpustakaan UNPAM"/>
+    <div class="slide-caption">
+      <h2>Selamat Datang di Perpustakaan UNPAM</h2>
+      <p>Berbagi Untuk Negeri – Sumber Ilmu dan Informasi Akademik</p>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/slider2.jpg"
+      onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80'"
+      alt="Koleksi Buku"/>
+    <div class="slide-caption">
+      <h2>Koleksi Lengkap Buku &amp; Jurnal Ilmiah</h2>
+      <p>Tersedia buku, jurnal, skripsi, tesis, dan laporan penelitian dosen</p>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/slider3.jpg"
+      onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1200&q=80'"
+      alt="Perpustakaan Digital"/>
+    <div class="slide-caption">
+      <h2>Perpustakaan Digital Universitas Pamulang</h2>
+      <p>Akses koleksi digital kapan saja dan di mana saja melalui aplikasi e-Library UNPAM</p>
+    </div>
+  </div>
+  <button class="slider-arrow prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+  <button class="slider-arrow next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+  <div class="slider-controls">
+    <div class="slider-dot active" onclick="goSlide(0)"></div>
+    <div class="slider-dot" onclick="goSlide(1)"></div>
+    <div class="slider-dot" onclick="goSlide(2)"></div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="container" style="display:flex;align-items:center;overflow:hidden;">
+    <div class="marquee-label"><i class="fas fa-bullhorn"></i> PENGUMUMAN</div>
+    <div style="overflow:hidden;flex:1;">
+      <div class="marquee-text">
+        Selamat datang di website Perpustakaan Universitas Pamulang &nbsp;|&nbsp; 
+        Jam layanan: Senin–Jumat 08.00–20.00 &nbsp;|&nbsp; 
+        Sabtu 08.00–17.00 &nbsp;|&nbsp; 
+        Pendaftaran anggota baru dapat dilakukan di bagian Sirkulasi &nbsp;|&nbsp; 
+        Tersedia layanan e-Library berbasis Android dan Windows &nbsp;|&nbsp;
+        Telp: 021 7412566 ext 1070/26 &nbsp;|&nbsp; Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2b5b4e595b5e585f4a404a4a456b5e455b4a46054a4805424f">[email&#160;protected]</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-wrap">
+  <div class="container">
+    <!-- CONTENT AREA -->
+    <div class="content-area">
+
+      <!-- QUICK ACCESS -->
+      <div class="widget" style="margin-bottom:22px;">
+        <div class="section-title"><i class="fas fa-th" style="margin-right:8px"></i> Akses Cepat</div>
+        <div class="section-box">
+          <div class="quick-grid">
+            <a href="https://perpus.unpam.ac.id" target="_blank" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-search"></i></div>
+              <p>Pencarian Buku (OPAC)</p>
+            </a>
+            <a href="#" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-mobile-alt"></i></div>
+              <p>Perpustakaan Digital</p>
+            </a>
+            <a href="https://eprints.unpam.ac.id" target="_blank" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-database"></i></div>
+              <p>Repository Unpam</p>
+            </a>
+            <a href="#" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-globe"></i></div>
+              <p>Database Online</p>
+            </a>
+            <a href="#" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-book-open"></i></div>
+              <p>Koleksi E-Book</p>
+            </a>
+            <a href="#" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-graduation-cap"></i></div>
+              <p>Skripsi &amp; Tesis</p>
+            </a>
+            <a href="#" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-id-card"></i></div>
+              <p>Keanggotaan</p>
+            </a>
+            <a href="#" class="quick-item">
+              <div class="qi-icon"><i class="fas fa-download"></i></div>
+              <p>Unduh Formulir</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATISTIK -->
+      <div class="widget" style="margin-bottom:22px;">
+        <div class="section-title"><i class="fas fa-chart-bar" style="margin-right:8px"></i> Statistik Koleksi</div>
+        <div class="section-box">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-num">50.000+</div>
+              <div class="stat-label"><i class="fas fa-book" style="color:#c8102e;margin-right:4px"></i> Koleksi Buku</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">5.000+</div>
+              <div class="stat-label"><i class="fas fa-scroll" style="color:#c8102e;margin-right:4px"></i> Skripsi &amp; Tesis</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">1.000+</div>
+              <div class="stat-label"><i class="fas fa-newspaper" style="color:#c8102e;margin-right:4px"></i> Jurnal Ilmiah</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BERITA / KEGIATAN -->
+      <div class="widget">
+        <div class="section-title"><i class="fas fa-newspaper" style="margin-right:8px"></i> Berita &amp; Kegiatan</div>
+        <div class="section-box">
+          <div class="news-grid">
+            <a href="#" class="news-item">
+              <img class="news-img"
+                src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/kegiatan1.jpg"
+                onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=200&q=70'"
+                alt="Berita 1"/>
+              <div class="news-body">
+                <h4>Perpustakaan UNPAM Terus Tingkatkan Layanan Digital untuk Mahasiswa</h4>
+                <div class="news-meta"><i class="far fa-calendar"></i> 10 Maret 2024</div>
+              </div>
+            </a>
+            <a href="#" class="news-item">
+              <img class="news-img"
+                src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/kegiatan2.jpg"
+                onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=200&q=70'"
+                alt="Berita 2"/>
+              <div class="news-body">
+                <h4>Kunjungan Studi Banding dari Perguruan Tinggi Lain ke Perpustakaan UNPAM</h4>
+                <div class="news-meta"><i class="far fa-calendar"></i> 5 Maret 2024</div>
+              </div>
+            </a>
+            <a href="#" class="news-item">
+              <img class="news-img"
+                src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/kegiatan3.jpg"
+                onerror="this.src='https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=200&q=70'"
+                alt="Berita 3"/>
+              <div class="news-body">
+                <h4>Pelatihan Literasi Informasi bagi Mahasiswa Baru Universitas Pamulang</h4>
+                <div class="news-meta"><i class="far fa-calendar"></i> 28 Februari 2024</div>
+              </div>
+            </a>
+            <a href="#" class="news-item">
+              <img class="news-img"
+                src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/kegiatan4.jpg"
+                onerror="this.src='https://images.unsplash.com/photo-1568667256549-094345857637?w=200&q=70'"
+                alt="Berita 4"/>
+              <div class="news-body">
+                <h4>Penambahan Koleksi Buku Terbaru Semester Genap 2023/2024</h4>
+                <div class="news-meta"><i class="far fa-calendar"></i> 20 Februari 2024</div>
+              </div>
+            </a>
+            <a href="#" class="news-item">
+              <img class="news-img"
+                src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/kegiatan5.jpg"
+                onerror="this.src='https://images.unsplash.com/photo-1535905557558-afc4877a26fc?w=200&q=70'"
+                alt="Berita 5"/>
+              <div class="news-body">
+                <h4>Seminar Nasional Kepustakawanan Indonesia di UNPAM</h4>
+                <div class="news-meta"><i class="far fa-calendar"></i> 15 Februari 2024</div>
+              </div>
+            </a>
+            <a href="#" class="news-item">
+              <img class="news-img"
+                src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/kegiatan6.jpg"
+                onerror="this.src='https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=200&q=70'"
+                alt="Berita 6"/>
+              <div class="news-body">
+                <h4>Peluncuran Aplikasi e-Library UNPAM Versi Terbaru untuk Android</h4>
+                <div class="news-meta"><i class="far fa-calendar"></i> 8 Februari 2024</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFIL SINGKAT -->
+      <div class="widget">
+        <div class="section-title"><i class="fas fa-info-circle" style="margin-right:8px"></i> Tentang Perpustakaan</div>
+        <div class="section-box" style="padding:18px 16px;">
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/gedung-perpus.jpg"
+              onerror="this.src='https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&q=80'"
+              alt="Gedung Perpustakaan"
+              style="width:200px;height:140px;object-fit:cover;border-radius:3px;flex-shrink:0;"/>
+            <div>
+              <p style="line-height:1.8;font-size:13px;color:#444;">
+                Tidak terasa, kini usia perpustakaan Universitas Pamulang menginjak usianya yang ke-13 tahun. 
+                Perpustakaan Universitas Pamulang telah menempati gedung sendiri yang terdiri dari <strong>3 (tiga) lantai</strong>:
+                lantai 1 berisi koleksi berbagai buku, jurnal, kamus, serta BI Corner; 
+                lantai 2 berisi koleksi berbagai buku, ruang internet, ruang diskusi; 
+                dan lantai 3 berisi koleksi referensi: skripsi/tesis dan hasil penelitian dosen.
+              </p>
+              <p style="line-height:1.8;font-size:13px;color:#444;margin-top:10px;">
+                Perpustakaan Universitas Pamulang terus berbenah memberikan pelayanan prima kepada pengunjungnya 
+                dengan cara mengembangkan sistem perpustakaan berbasis web, guna menumbuhkembangkan minat baca 
+                mahasiswa melalui teknologi yang dimilikinya.
+              </p>
+              <a href="#" style="display:inline-block;margin-top:12px;background:#c8102e;color:#fff;padding:7px 16px;border-radius:3px;text-decoration:none;font-size:12px;font-weight:700;">Baca Selengkapnya</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- Search -->
+      <div class="widget">
+        <div class="section-title"><i class="fas fa-search" style="margin-right:8px"></i> Pencarian Buku</div>
+        <div class="widget-body">
+          <form class="search-form" action="https://perpus.unpam.ac.id" target="_blank">
+            <input type="text" placeholder="Cari judul, pengarang..."/>
+            <button type="submit"><i class="fas fa-search"></i></button>
+          </form>
+          <p style="font-size:11px;color:#999;margin-top:8px;">Pencarian melalui katalog OPAC Perpustakaan UNPAM</p>
+        </div>
+      </div>
+
+      <!-- Jam Layanan -->
+      <div class="widget">
+        <div class="section-title"><i class="fas fa-clock" style="margin-right:8px"></i> Jam Layanan</div>
+        <div class="widget-body">
+          <table class="jam-table">
+            <tr><td>Senin – Jumat</td><td>08.00 – 20.00</td></tr>
+            <tr><td>Sabtu</td><td>08.00 – 17.00</td></tr>
+            <tr><td>Minggu</td><td>Tutup</td></tr>
+            <tr><td>Hari Libur</td><td>Menyesuaikan</td></tr>
+          </table>
+          <div style="margin-top:12px;padding:8px;background:#fef4f6;border-left:3px solid #c8102e;font-size:12px;color:#555;">
+            <i class="fas fa-info-circle" style="color:#c8102e;margin-right:4px"></i>
+            Layanan bebas pustaka setiap hari kerja
+          </div>
+        </div>
+      </div>
+
+      <!-- Galeri -->
+      <div class="widget">
+        <div class="section-title"><i class="fas fa-images" style="margin-right:8px"></i> Galeri Foto</div>
+        <div class="section-box" style="padding:0;">
+          <div class="gallery-grid">
+            <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/gallery1.jpg"
+              onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=150&q=70'" alt="g1"/>
+            <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/gallery2.jpg"
+              onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=150&q=70'" alt="g2"/>
+            <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/gallery3.jpg"
+              onerror="this.src='https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=150&q=70'" alt="g3"/>
+            <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/gallery4.jpg"
+              onerror="this.src='https://images.unsplash.com/photo-1568667256549-094345857637?w=150&q=70'" alt="g4"/>
+            <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/gallery5.jpg"
+              onerror="this.src='https://images.unsplash.com/photo-1535905557558-afc4877a26fc?w=150&q=70'" alt="g5"/>
+            <img src="https://perpustakaan.unpam.ac.id/wp-content/uploads/2021/10/gallery6.jpg"
+              onerror="this.src='https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=150&q=70'" alt="g6"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tautan -->
+      <div class="widget">
+        <div class="section-title"><i class="fas fa-link" style="margin-right:8px"></i> Tautan Terkait</div>
+        <div class="widget-body">
+          <ul class="link-list">
+            <li><a href="https://eprints.unpam.ac.id" target="_blank"><i class="fas fa-angle-right"></i> Repository UNPAM</a></li>
+            <li><a href="https://perpus.unpam.ac.id" target="_blank"><i class="fas fa-angle-right"></i> O P A C</a></li>
+            <li><a href="https://www.perpusnas.go.id" target="_blank"><i class="fas fa-angle-right"></i> Perpustakaan Nasional RI</a></li>
+            <li><a href="https://garuda.kemdikbud.go.id" target="_blank"><i class="fas fa-angle-right"></i> Garuda (Portal Dikti)</a></li>
+            <li><a href="https://scholar.google.com" target="_blank"><i class="fas fa-angle-right"></i> Google Scholar</a></li>
+            <li><a href="https://doaj.org" target="_blank"><i class="fas fa-angle-right"></i> DOAJ</a></li>
+            <li><a href="https://search.ebscohost.com" target="_blank"><i class="fas fa-angle-right"></i> EBSCOhost</a></li>
+            <li><a href="https://lib.ui.ac.id" target="_blank"><i class="fas fa-angle-right"></i> Perpustakaan UI</a></li>
+            <li><a href="https://library.ugm.ac.id" target="_blank"><i class="fas fa-angle-right"></i> Perpustakaan UGM</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Social Media -->
+      <div class="widget">
+        <div class="section-title"><i class="fas fa-share-alt" style="margin-right:8px"></i> Media Sosial</div>
+        <div class="widget-body">
+          <div class="social-links">
+            <a href="#" class="social-btn fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#" class="social-btn ig"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#" class="social-btn yt"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="#" class="social-btn tt"><i class="fab fa-tiktok"></i> TikTok</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT BANNER -->
+<div class="contact-banner">
+  <div class="container">
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <h4>Alamat</h4>
+          <p>Jl. Surya Kencana No.1 Pamulang,<br/>Tangerang Selatan 15417</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <div>
+          <h4>Telepon</h4>
+          <p>021 7412566 ext 1070/26</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-fax"></i>
+        <div>
+          <h4>Faksimile</h4>
+          <p>021 74709855</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <h4>Email</h4>
+          <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e595809795909691848e84848ba5908b958488cb8486cb8c81">[email&#160;protected]</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo">
+          <img src="https://perpustakaan-unpam-ac-id.github.io/logo-unpam.png"
+            alt="Logo UNPAM"/>
+          <div class="ft-text">Perpustakaan<br/>Universitas Pamulang</div>
+        </div>
+        <p>Perpustakaan Universitas Pamulang melayani seluruh civitas akademika dalam memenuhi kebutuhan informasi dan referensi ilmiah demi mendukung kegiatan belajar mengajar yang berkualitas.</p>
+        <p style="margin-top:10px;font-size:12px;"><em>"Berbagi Untuk Negeri"</em></p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigasi</h4>
+        <ul>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Beranda</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Tentang Kami</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Layanan</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Koleksi</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Perpustakaan Digital</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Database Online</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Kegiatan</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Kontak</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Layanan</h4>
+        <ul>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Pencarian Buku</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Peminjaman</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Bebas Pustaka</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Ruang Baca</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Internet & Wifi</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Keanggotaan</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i> Unduh Formulir</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <ul>
+          <li style="color:#aaa;font-size:13px;padding:4px 0;">
+            <i class="fas fa-map-marker-alt" style="color:#c8102e;margin-right:6px"></i>
+            Jl. Surya Kencana No.1 Pamulang, Tangerang Selatan
+          </li>
+          <li style="color:#aaa;font-size:13px;padding:4px 0;">
+            <i class="fas fa-phone" style="color:#c8102e;margin-right:6px"></i>
+            021 7412566 ext 1070/26
+          </li>
+          <li style="color:#aaa;font-size:13px;padding:4px 0;">
+            <i class="fas fa-envelope" style="color:#c8102e;margin-right:6px"></i>
+            <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="08786dCcijrCfZBuqDzBWp3qSrBEZCqBUfQVz4CWGHWF91iaEw">[email&#160;protected]</a>
+          </li>
+          <li style="color:#aaa;font-size:13px;padding:4px 0;">
+            <i class="fas fa-globe" style="color:#c8102e;margin-right:6px"></i>
+            perpustakaan.unpam.ac.id
+          </li>
+        </ul>
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <a href="#" style="width:34px;height:34px;background:#1877f2;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;text-decoration:none;"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" style="width:34px;height:34px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;text-decoration:none;"><i class="fab fa-instagram"></i></a>
+          <a href="#" style="width:34px;height:34px;background:#ff0000;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;text-decoration:none;"><i class="fab fa-youtube"></i></a>
+          <a href="#" style="width:34px;height:34px;background:#010101;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;text-decoration:none;"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2024 Perpustakaan Universitas Pamulang. All Rights Reserved. &nbsp;|&nbsp;
+    Kepala Perpustakaan: <a href="#">Nur Lingga Setya Dewi, S.IP., M.M</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Slider
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.slider-dot');
+
+  function showSlide(n) {
+    slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+  }
+  function changeSlide(dir) { showSlide(currentSlide + dir); }
+  function goSlide(n) { showSlide(n); }
+  setInterval(() => changeSlide(1), 5000);
+
+  // Nav toggle
+  function toggleNav() {
+    document.getElementById('main-nav').classList.toggle('open');
+  }
+
+  // Sticky header shrink on scroll
+  const headerEl = document.querySelector('header');
+  const navEl = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      headerEl.classList.add('scrolled');
+      navEl.classList.add('nav-compact');
+    } else {
+      headerEl.classList.remove('scrolled');
+      navEl.classList.remove('nav-compact');
+    }
+  });
+</script>
+</body>
+</html>
